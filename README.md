@@ -17,7 +17,7 @@ below any defined thresholds.
 
 ## Use check on Checkson
 
-This check can be used on [checkson.io](https://checkson.io) with the following Docker image:
+This check can be used on [checkson.io](https://checkson.io) (or anywhere else) with the following Docker image:
 
 ```
 ghcr.io/checkson-io/checkson-pagespeed-check:main
