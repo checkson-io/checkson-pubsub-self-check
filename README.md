@@ -1,50 +1,37 @@
-# Checkson Check for monitoring an HTTP redirect
+# Checkson Check for monitoring the page speed of a website
 
-Use this check on [checkson.io](https://checkson.io) to find out if:
+This check uses [Google's PageSpeed API](https://developers.google.com/speed/docs/insights/v5/get-started) 
+(which in turn is built on [Lighthouse](https://github.com/GoogleChrome/lighthouse))
 
-* The original URL presents a valid certificate (for HTTPS)
-* The correct status code (`301 - Moved Permanently`) is returned
-* The correct `Location` header is returned
-
-It can for example be used if your website has moved to a new domain or if you want to be sure
-that an automatic upgrade from HTTP to HTTPS works (see example below).
+Use this check on [checkson.io](https://checkson.io) to monitor if your technical SEO, performance do not fall
+below any defined thresholds.
 
 ## Environment variables
 
-| Variable     | Description |
-|--------------|-------------|
-| URL          | The URL to check |
-| REDIRECT_URL | The expected URL to redirect to (contents of the `Location` header) |
+| Variable       | Description |
+|----------------|-------------|
+| URL            | The URL to check |
+| CATEGORY       | One of `accessibility`, `best-practices`, `performance`, `pwa`, `seo`. Default is `performance` |
+| STRAGEGY       | One of `mobile`, `desktop`, Default is `desktop` |
+| SCORE_THRESHOLD | Number between 0.0 and 1.0 |
 
 ## Use check on Checkson
 
 This check can be used on [checkson.io](https://checkson.io) with the following Docker image:
 
 ```
-ghcr.io/checkson-io/checkson-redirect-check:main
+ghcr.io/checkson-io/checkson-pagespeed-check:main
 ```
 
 ## Run check locally
 
-This checks if an HTTPS upgrade works:
+This checks the performance score of a website is above 90%.
 
 ```
 docker run \
-  --env URL=http://instagram.com \
-  --env REDIRECT_URL=https://instagram.com/ \
+  --env URL=https://nytimes.com \
+  --env SCORE_THRESHOLD=0.9 \
   --rm \
   -it \
-  ghcr.io/checkson-io/checkson-redirect-check:main
-```
-
-This checks if a website properly redirects to a new domain
-(VictorOps was acquired by Splunk):
-
-```
-docker run \
-  --env URL=https://victorops.com \
-  --env REDIRECT_URL=https://www.splunk.com/en_us/investor-relations/acquisitions/splunk-on-call.html \
-  --rm \
-  -it \
-  ghcr.io/checkson-io/checkson-redirect-check:main
+  ghcr.io/checkson-io/checkson-pagespeed-check:main
 ```
