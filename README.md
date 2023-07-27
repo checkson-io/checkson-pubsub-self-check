@@ -6,6 +6,9 @@ This check uses [Google's PageSpeed API](https://developers.google.com/speed/doc
 Use this check on [checkson.io](https://checkson.io) to monitor if your technical SEO, performance do not fall
 below any defined thresholds.
 
+To determine the threshold, it's a good idea to go to [pagespeed.web.dev](https://pagespeed.web.dev/) and analyze
+your website initially as a baseline.
+
 ## Environment variables
 
 | Variable       | Description |
