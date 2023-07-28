@@ -23,7 +23,7 @@ ghcr.io/checkson-io/checkson-pubsub-self-check:main
 
 ```
 docker run \
-  --env CHECK_API_SECRET=xyz \
+  --env CHECK_API_SECRET=xyz123 \
   --rm \
   -it \
   ghcr.io/checkson-io/checkson-pubsub-self-heck:main
