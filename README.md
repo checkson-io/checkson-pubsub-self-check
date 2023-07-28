@@ -13,12 +13,12 @@ and `1.0` (100%) for the `SCORE_THRESHOLD`.
 
 ## Environment variables
 
-| Variable        | Description |
-|---------------- |-------------|
-| URL             | The URL to check |
-| CATEGORY        | One of `accessibility`, `best-practices`, `performance`, `pwa`, `seo`. Default is `performance` |
-| STRAGEGY        | One of `mobile`, `desktop`, Default is `desktop` |
-| SCORE_THRESHOLD | Number between 0.0 and 1.0 |
+| Variable          | Description |
+|------------------ |-------------|
+| `URL`             | The URL to check |
+| `CATEGORY`        | One of `accessibility`, `best-practices`, `performance`, `pwa`, `seo`. Default is `performance` |
+| `STRATEGY`        | One of `mobile`, `desktop`, Default is `desktop` |
+| `SCORE_THRESHOLD` | Number between 0.0 and 1.0 |
 
 ## Use check on Checkson
 
