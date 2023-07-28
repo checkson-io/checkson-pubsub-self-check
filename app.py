@@ -1,37 +1,39 @@
 import requests
 import os
 import sys
+import string
+import random
+from time import sleep
+
+
+def random_string():
+    return ''.join(random.choice(string.ascii_letters) for i in range(32))
 
 
 def main():
 
-    url_to_check = os.environ['URL']
-    category = os.environ.get('CATEGORY', 'performance')
-    strategy = os.environ.get('STRATEGY', 'desktop')
-    score_threshold = float(os.environ['SCORE_THRESHOLD'])
+    secret = os.environ['CHECK_API_SECRET']
 
-    if strategy not in ['mobile', 'desktop']:
-        raise ValueError('STRATEGY must be "mobile" or "desktop"')
+    post_url = 'https://europe-west1-checkson-cadf1.cloudfunctions.net/checkPubSub'
+    get_url = 'https://api.checkson.io/api/pubsub-check'
 
-    if category not in ['ACCESSIBILITY', 'best-practices', 'performance', 'pwa', 'seo']:
-        raise ValueError('CATEGORY must be "accessibility", "best-practices", "performance", "pwa", or "seo"')
+    identifier = random_string()
 
-    if score_threshold < 0 or score_threshold > 1:
-        raise ValueError('SCORE_THRESHOLD must be between 0 and 1')
+    post_response = requests.post(post_url, json={'identifier': identifier}, headers={'Authorization': f'Bearer {secret}'})
+    post_response.raise_for_status()
 
-    base_url = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
-    url = f'{base_url}?url={url_to_check}&strategy={strategy}&category={category}'
+    sleep(3)
 
-    response = requests.get(url)
-    response.raise_for_status()
-    data = response.json()
-    score = float(data['lighthouseResult']['categories'][category]['score'])
+    get_response = requests.get(get_url)
+    get_response.raise_for_status()
 
-    if score < score_threshold:
-        print(f'{category} score of {score} is below threshold of {score_threshold}')
+    response_identifier = get_response.text
+
+    if response_identifier != identifier:
+        print(f'Returned identifier {response_identifier} does not match sent identifier {identifier}')
         sys.exit(1)
 
-    print(f'{category} score of {score} is above threshold of {score_threshold}, everything is fine')
+    print(f'Requested identifier {identifier} and received identifier {response_identifier} match')
     sys.exit(0)
 
 
