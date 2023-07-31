@@ -14,7 +14,7 @@ def main():
 
     secret = os.environ['CHECK_API_SECRET']
 
-    post_url = 'https://europe-west1-checkson-cadf1.cloudfunctions.net/checkPubSub'
+    post_url = 'https://europe-west1-checkson-cadf1.cloudfunctions.net/checkpubsub'
     get_url = 'https://api.checkson.io/api/pubsub-check'
 
     identifier = random_string()
